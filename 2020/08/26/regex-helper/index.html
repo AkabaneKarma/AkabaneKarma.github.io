@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="正则表达式常用知识点正则表达式的创建是在运行时编译的（构造自动机），所以不要在循环中创建正则表达式，尽量在循环外面创建。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="regex_helper">
+<meta property="og:url" content="http://yoursite.com/2020/08/26/regex-helper/index.html">
+<meta property="og:site_name" content="ChenXi">
+<meta property="og:description" content="正则表达式常用知识点正则表达式的创建是在运行时编译的（构造自动机），所以不要在循环中创建正则表达式，尽量在循环外面创建。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/.com//replace_test.png">
+<meta property="article:published_time" content="2020-08-26T04:15:32.000Z">
+<meta property="article:modified_time" content="2020-08-26T17:41:41.556Z">
+<meta property="article:author" content="Chenxi Xie">
+<meta property="article:tag" content="正则表达式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/.com//replace_test.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/08/26/regex-helper/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>regex_helper | ChenXi</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ChenXi</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/26/regex-helper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chenxi Xie">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ChenXi">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          regex_helper
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-26 12:15:32" itemprop="dateCreated datePublished" datetime="2020-08-26T12:15:32+08:00">2020-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-27 01:41:41" itemprop="dateModified" datetime="2020-08-27T01:41:41+08:00">2020-08-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="正则表达式常用知识点"><a href="#正则表达式常用知识点" class="headerlink" title="正则表达式常用知识点"></a>正则表达式常用知识点</h2><p>正则表达式的创建是在运行时编译的（构造自动机），所以不要在循环中创建正则表达式，尽量在循环外面创建。</p>
+<a id="more"></a>
+<h3 id="常用组件"><a href="#常用组件" class="headerlink" title="常用组件"></a>常用组件</h3><ol>
+<li>regex<br>声明一个regex类，如regex pattern(“xxxx”)</li>
+<li>regex_match</li>
+<li>regex_search<br>寻找第一个匹配的</li>
+<li>regex_replace</li>
+<li>sregex_iterator</li>
+<li>smatch/match_results<br>容器，保存搜索结果。</li>
+</ol>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="regex使用"><a href="#regex使用" class="headerlink" title="regex使用"></a>regex使用</h4><p>用来声明一个正则表达式类，用string来初始化</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">pattern</span><span class="params">(<span class="string">&quot;&#123;0-9&#125;&quot;</span>)</span></span>;</span><br><span class="line"><span class="function">regex <span class="title">r</span><span class="params">(pattern)</span></span>;</span><br><span class="line"><span class="function">regex <span class="title">r</span><span class="params">(pattern,regex::icase)</span></span>;<span class="comment">// 忽略大小写</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="regex-match使用"><a href="#regex-match使用" class="headerlink" title="regex_match使用"></a>regex_match使用</h4><p>调用格式：<br>regex_match(str,results,r);<br><strong>注：也可以不保存结果到result中，去掉这个参数只用返回值true or false</strong><br>str是要进行匹配的字符串，results是smatch类容器，r是正则表达式类。<br>返回值为非零说明匹配成功，零说明匹配失败<br>这个是完整匹配str和正则表达式，如果能匹配上返回true否则false，例如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">reg_str</span><span class="params">(<span class="string">&quot;(\\d&#123;4&#125;).*&quot;</span>)</span></span>;</span><br><span class="line"><span class="function">regex <span class="title">r</span><span class="params">(str)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">&quot;1999 is my birth year&quot;</span>)</span></span>;</span><br><span class="line">smatch result;</span><br><span class="line"><span class="keyword">if</span>(regex_match(str,result,r))&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;result[<span class="number">0</span>]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;result[<span class="number">1</span>]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这个例子中，result[0]是整个字符串str，result[1]是第一个匹配到的元组（括号内的），按序存放在result中。<br>需要记住的是调用顺序：要匹配的字符串，容器，规则。<br>要匹配的字符串，容器，规则。<br>要匹配的字符串，容器，规则。<br>regex_match(str,result,r);<br>regex_match(str,result,r);<br>regex_match(str,reuslt,r);</p>
+<h4 id="regex-search使用"><a href="#regex-search使用" class="headerlink" title="regex_search使用"></a>regex_search使用</h4><p>和regex_match参数相同都是str，result，r<br>返回值是，有无(true/false)，会将搜索到的第一个结果保存在result[0]中<br>如果想要遍历整个str搜索的话例子如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">&quot;1999 is my birth year&quot;</span>)</span></span>;</span><br><span class="line"><span class="function">regex <span class="title">r</span><span class="params">(<span class="string">&quot;\\d&#123;4&#125;&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明迭代器</span></span><br><span class="line"><span class="built_in">string</span>::const_iterator iter = str.<span class="built_in">begin</span>();</span><br><span class="line"><span class="built_in">string</span>::const_iterator iterEnd = str.<span class="built_in">end</span>();</span><br><span class="line"><span class="built_in">string</span> temp;</span><br><span class="line"><span class="keyword">while</span>(regex_search(iter,iterEnd,result,r))&#123;</span><br><span class="line">    temp = result[<span class="number">0</span>].str();</span><br><span class="line">    <span class="comment">// 或者使用result.str();</span></span><br><span class="line">    iter = result[<span class="number">0</span>].second;<span class="comment">// second保存的是str中的迭代器位置</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="捕获组"><a href="#捕获组" class="headerlink" title="捕获组"></a>捕获组</h4><p>使用括号来捕获匹配的捕获组<br>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str = <span class="string">&quot;2019年12月看的电视hhhhh大亨堡会不会小七的最好吃，你信不信啊?&quot;</span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">pattern</span><span class="params">(<span class="string">&quot;((会)(不)(会)|是不是|能不能|信不信)&quot;</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>其中大捕获组((会)(不)(会)|是不是|能不能|信不信),小捕获组(会)、(不)、(会)，匹配到的results的size()为5，分别为整体，大捕获组，三个小捕获组：会不会，会不会，会，不，会。<br><strong>这里有一个问题，进行如下代码时results.size()第一次匹配为5可以理解，之后下次search过后size依旧为5，但其中前两个正常输出，但后面输出空字符串很奇怪</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">       smatch results;</span><br><span class="line"><span class="built_in">string</span> str = <span class="string">&quot;2019年12月看的电视hhhhh大亨堡会不会小七的最好吃，你信不信啊?&quot;</span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">pattern</span><span class="params">(<span class="string">&quot;((会)(不)(会)|是不是|能不能|信不信)&quot;</span>)</span></span>;</span><br><span class="line"><span class="function">regex <span class="title">r</span><span class="params">(pattern)</span></span>;   <span class="comment">//regex 表示一个正则表达式类</span></span><br><span class="line"><span class="built_in">string</span>::const_iterator iterStart = str.<span class="built_in">begin</span>(); <span class="comment">//迭代器声明</span></span><br><span class="line"><span class="built_in">string</span>::const_iterator iterEnd = str.<span class="built_in">end</span>();</span><br><span class="line"><span class="built_in">string</span> temp;</span><br><span class="line"><span class="keyword">while</span> (regex_search(iterStart,iterEnd,results,r))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;results.<span class="built_in">size</span>()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;results.<span class="built_in">size</span>();i++) <span class="built_in">cout</span>&lt;&lt;results[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">//cout &lt;&lt; results.first &lt;&lt; endl;        </span></span><br><span class="line">    iterStart = results[<span class="number">0</span>].second; <span class="comment">//更新搜索起始位置，搜索剩下的字符串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>猜测：size()捕获组不是真的捕获到的，而是正则表达式的捕获的个数，而下标对应的是捕获组预计位置捕获到的东西，所以size一直为5，但不一定会有东西能输出出来，如果希望只输出匹配到的捕获组，需要如下使用方式</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">       <span class="built_in">string</span> str = <span class="string">&quot;2019年12月看的电视hhhhh大亨堡会不会小七的最好吃，你信不信啊?&quot;</span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">pattern</span><span class="params">(<span class="string">&quot;((会)(不)(会)|是不是|能不能|((信)(不)(信)))&quot;</span>)</span></span>;</span><br><span class="line">       <span class="keyword">while</span> (regex_search(iterStart,iterEnd,results,r))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;results.<span class="built_in">size</span>()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;results.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(results[i].matched) <span class="built_in">cout</span>&lt;&lt;results[i]&lt;&lt;<span class="built_in">endl</span>;    </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//cout &lt;&lt; results.first &lt;&lt; endl;        </span></span><br><span class="line">    iterStart = results[<span class="number">0</span>].second; <span class="comment">//更新搜索起始位置，搜索剩下的字符串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="regex-replace"><a href="#regex-replace" class="headerlink" title="regex_replace"></a>regex_replace</h4><p>1.字符串匹配替换<br>regex_replace(str,r,newstr);<br>调用顺序：原字符串，正则表达式，要替换的字符串<br>2.提取字符串匹配到的内容，并交换顺序<br>这里使用$1$2$3来指明捕获的字符串，实验结果如下图所示：<br><img src="/.com//replace_test.png" alt="regex_replace使用方法二测试结果"></p>
+<p>如图所示，可以看出，regex_replace的返回一个字符串，将匹配到的地方挖掉之后，输出挖掉的加上要输出的$12345…。例如 $1对应的是“会不会”，$2对应的是“会”，$3对应的是”不”…,而除了要输出的元素以外，其他地方被挖掉了。</p>
+<p>###总结</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag"># 正则表达式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/24/stl_list_helper/" rel="prev" title="STL:LIST的相关用法总结">
+      <i class="fa fa-chevron-left"></i> STL:LIST的相关用法总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">正则表达式常用知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">常用组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#regex%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">regex使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regex-match%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">regex_match使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regex-search%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">regex_search使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E7%BB%84"><span class="nav-number">1.2.4.</span> <span class="nav-text">捕获组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regex-replace"><span class="nav-number">1.2.5.</span> <span class="nav-text">regex_replace</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chenxi Xie</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chenxi Xie</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
